@@ -1,2 +1,4 @@
 flask
 nltk
+streamlit
+PyPDF2

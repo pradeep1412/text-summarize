@@ -1,25 +1,38 @@
-from flask import Flask, request, jsonify
 from summarizer import text_summarize
+import streamlit as st
+import PyPDF2
 
-app = Flask(__name__)
+def read_pdf_text(pdf_file):
+    text = ""
+    for pdf in pdf_file:
+        pdf_reader = PyPDF2.PdfReader(pdf)
+        for page in pdf_reader.pages:
+            text += page.extract_text()
+        
+    return text
 
+def main():
+    st.set_page_config(page_title="Text Summarizer", page_icon=":📄:")
+    st.header("Text Summarizer")
+    raw_text = ""
+    st.session_state.summarize = ""
+    st.write(st.session_state.summarize)
+    with st.sidebar:
+        option = st.selectbox('How would you like chat with PDF?', ('Upload PDF', 'Upload text'))
+        if option == "Upload PDF":
+            pdf_doc_url = st.file_uploader("Upload your pdf here and click on process", accept_multiple_files=True)
+            with st.spinner("Proccessing"):
+                if st.button("Extract Text"):
+                    raw_text = read_pdf_text(pdf_doc_url)
+        else:
+            raw_text = st.text_area("Enter your text")
+            
+    temp = text_summarize(raw_text, num_sentences=2)
+    st.session_state.summarize = temp
+    st.write("write from after")
+    st.write()
+    if st.button("reset"):
+            st.session_state.summarize = ""
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
-
-# @app.route('/summarizer')
-# def search():
-#     num_sentences = request.args.get('num_sentences', '2')
-#     context = request.args.get('context') 
-
-#     if not context:
-#         return jsonify({"error": "Missing 'context' parameter."}), 400
-
-#     return text_summarize(context, int(num_sentences))
-
-
-
-if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8080, debug=False)
-
+if __name__ == "__main__":
+    main()

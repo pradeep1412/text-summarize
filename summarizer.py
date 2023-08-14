@@ -3,6 +3,8 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.probability import FreqDist
 
+nltk.download('punkt')
+nltk.download('stopwords')
 
 def text_summarize(text, num_sentences=3):
     sentences = sent_tokenize(text)
@@ -32,6 +34,6 @@ input_text = """
 Natural language processing (NLP) is a field of artificial intelligence that focuses on the interaction between computers and humans through natural language. The ultimate goal of NLP is to read, decipher, understand, and make sense of human language in a way that is valuable. NLP has applications in many areas, including language translation, sentiment analysis, chatbots, and text summarization.
 """
 
-num_sentences = 2
-summary = text_summarize(input_text, num_sentences)
-print(summary)
+# num_sentences = 2
+# summary = text_summarize(input_text, num_sentences)
+# print(summary)
