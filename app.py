@@ -1,5 +1,11 @@
 from flask import Flask, request, jsonify
-from summarizer import text_summarize
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize, sent_tokenize
+from nltk.probability import FreqDist
+
+nltk.download('punkt')
+nltk.download('stopwords')
 
 app = Flask(__name__)
 
