@@ -1,9 +1,7 @@
-from transformers import pipeline
 from flask import Flask, request, jsonify
+from summarizer import text_summarize
 
 app = Flask(__name__)
-
-summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
 
 @app.route('/')
@@ -12,14 +10,13 @@ def hello_world():
 
 @app.route('/summarizer')
 def search():
-    lang = request.args.get('max_len', '130')  
-    country = request.args.get('min_len', '30') 
+    num_sentences = request.args.get('num_sentences', '2')
     context = request.args.get('context') 
 
-    if not query:
+    if not context:
         return jsonify({"error": "Missing 'context' parameter."}), 400
 
-    return summarizer(context, max_length=130, min_length=30, do_sample=False)
+    return text_summarize(context, int(num_sentences))
 
 
 
