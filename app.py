@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from summarizer import text_summarize
+# from summarizer import text_summarize
 
 app = Flask(__name__)
 
@@ -8,15 +8,15 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello, World!'
 
-@app.route('/summarizer')
-def search():
-    num_sentences = request.args.get('num_sentences', '2')
-    context = request.args.get('context') 
+# @app.route('/summarizer')
+# def search():
+#     num_sentences = request.args.get('num_sentences', '2')
+#     context = request.args.get('context') 
 
-    if not context:
-        return jsonify({"error": "Missing 'context' parameter."}), 400
+#     if not context:
+#         return jsonify({"error": "Missing 'context' parameter."}), 400
 
-    return text_summarize(context, int(num_sentences))
+#     return text_summarize(context, int(num_sentences))
 
 
 
