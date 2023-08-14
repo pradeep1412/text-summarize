@@ -3,8 +3,6 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.probability import FreqDist
 
-nltk.download('punkt')
-nltk.download('stopwords')
 
 def text_summarize(text, num_sentences=3):
     sentences = sent_tokenize(text)
